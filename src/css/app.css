@@ -1,7 +1,423 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans');
+@import 'tailwindcss';
+
 /* main */
 
 #root {
   display: block;
   height: 100%;
   width: 100%;
+}
+
+:root {
+  --pokeColourBlue1: #2a75bb;
+  --pokeColourBlue2: #3c5aa6;
+  --pokeColourBlue3: #1d2c5e;
+  --pokeColourYellow1: #ffcb05;
+  --pokeColourYellow2: #c7a008;
+  --pokeColourRed1: #cc0000;
+  --pokeColourRed2: #ff0000;
+
+  --linkColour: #000;
+  --linkHoverColour: #fff;
+  --linkHoverOpacity: 75%;
+
+  --BtnRadius: 5px;
+}
+
+@font-face {
+  font-family: 'Nunito Sans';
+  src: url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+body {
+  font-family: 'Nunito Sans', Arial, Helvetica, sans-serif !important;
+  background-color: var(--pokeColourBlue1);
+}
+
+button {
+  cursor: pointer;
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  background: none;
+}
+
+/* Logo */
+h1 {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -2px;
+}
+
+/* Titles */
+h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Names, Secondary Titles, Navbar Links */
+h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Names */
+h4 {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-600);
+}
+
+/* Price */
+h5 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.center {
+  margin: 0 auto;
+}
+
+.contentWrapper {
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.page__container {
+  display: grid;
+  margin-bottom: 50px;
+}
+
+/* home */
+
+.home__container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+#home__pokestore--logo {
+  width: 500px;
+}
+
+/* navbar */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  padding: 20px 0;
+  /* font-family: 'Nunito Sans', Arial, Helvetica, sans-serif; */
+}
+
+.navbar__primary--menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  li {
+    padding: 0 20px;
+  }
+
+  a {
+    text-decoration: none;
+    transition: 0.2s;
+    color: var(--linkColour);
+  }
+
+  a:hover {
+    color: var(--linkHoverColour);
+  }
+}
+
+.navbar__primary {
+  display: flex;
+  width: 20%;
+}
+
+.navbar__cart {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 10px;
+  padding: 10px;
+  border: solid 2px var(--pokeColourYellow2);
+  background-color: var(--pokeColourYellow1);
+  border-radius: 10px;
+  transition: 0.2s;
+
+  &:hover {
+    background-color: var(--pokeColourYellow2);
+  }
+}
+
+.navbar__cart--btn {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+}
+
+.navbar__cart--icon {
+  height: 25px;
+  color: #fff;
+
+  &:hover {
+    text-shadow: 10px 10px 10px #ccc;
+  }
+}
+
+.navbar__cart--qty {
+  text-decoration: none;
+}
+
+#navbar__pokestore--logo {
+  width: 250px;
+}
+
+/* shop */
+
+.shopCard__container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: var(--pokeColourYellow1);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.shopCard__name {
+  margin: 0 auto;
+}
+
+.shopCard__price {
+  padding-bottom: 5px;
+}
+
+.shopCard__img {
+  height: 75px;
+  width: 75px;
+}
+
+.shopCard__quantity__container {
+  display: flex;
+  justify-content: center;
+}
+
+.shopCard__quantity {
+  width: 25%;
+}
+
+.shopCard__addToCart {
+  margin: 10px;
+  padding: 5px;
+  background-color: var(--pokeColourBlue1);
+  transition: 0.2s;
+  border-radius: 5px;
+  font-family: 'Nunito Sans', Arial, Helvetica, sans-serif !important;
+  color: #fff;
+
+  &:hover {
+    background-color: var(--pokeColourBlue2);
+  }
+}
+
+.shopCard__qty {
+  background-color: var(--pokeColourRed2);
+  width: 20px;
+  color: var(--pokeColourYellow1);
+  transition: 0.2s;
+
+  &:hover {
+    background-color: var(--pokeColourRed1);
+  }
+}
+
+.shopCard__qty--decrease {
+  border-top-left-radius: var(--BtnRadius);
+  border-bottom-left-radius: var(--BtnRadius);
+}
+
+.shopCard__qty--increase {
+  border-top-right-radius: var(--BtnRadius);
+  border-bottom-right-radius: var(--BtnRadius);
+}
+
+.item__section {
+  height: 100%;
+  padding: 0 50px;
+}
+
+.items__container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-rows: auto;
+  grid-gap: 18px;
+}
+
+/* searchbar */
+
+.searchBar {
+  margin: 20px auto;
+  border-radius: 10px;
+  background-color: rgba(220, 220, 220);
+  display: flex;
+  align-items: center;
+  height: 50px;
+  padding: 0 20px;
+  &:hover .searchBar__button {
+    background-color: rgba(200, 200, 200);
+  }
+
+  &:hover .searchBar__input {
+    background-color: rgba(200, 200, 200);
+  }
+
+  &:hover {
+    background-color: rgba(200, 200, 200);
+  }
+}
+
+.searchBar__input {
+  padding: 0 20px;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  background-color: rgba(220, 220, 220);
+  font-size: 18px;
+}
+
+.searchBar__button {
+  background: none;
+  border: none;
+  padding-right: 10px;
+}
+
+/* side bar */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 20%;
+  background-color: grey;
+  border-radius: 10px;
+}
+
+/* cart */
+
+.cart__item__container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  border-bottom: solid 1px rgba(50, 50, 50, 0.5);
+}
+
+.cart__item__img {
+  width: 100px;
+}
+
+.cart__item__remove {
+  height: 30px;
+  width: 30px;
+  background-color: var(--pokeColourYellow1);
+  border: solid 2px var(--pokeColourYellow2);
+  font-size: 16px;
+  border-radius: 5px;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:after {
+    content: '\00d7';
+    color: var(--pokeColourRed1);
+    font-weight: 900;
+  }
+
+  &:hover {
+    background-color: var(--pokeColourYellow2);
+  }
+}
+
+.cart__header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: solid 2px var(--pokeColourYellow1);
+  color: var(--pokeColourBlue3);
+}
+
+.cart__total {
+  display: block;
+  font-weight: 700;
+  font-size: 28px;
+  float: right;
+  padding: 20px 0;
+  color: aliceblue;
+}
+
+#cart__checkout {
+  float: right;
+  background-color: brown;
+  padding: 15px 20px;
+  text-transform: uppercase;
+  box-shadow:
+    rgba(0, 0, 0, 0.3) 0px 8px 12px,
+    rgba(0, 0, 0, 0.22) 0px 7px 6px;
+  border: 1px solid;
+  color: aliceblue;
+  border: none;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 5px;
+  display: block;
+  clear: both;
+  transition: 0.5s;
+
+  &:after {
+    content: '\00bb';
+    position: relative;
+    opacity: 0;
+    right: -15px;
+    transition: 0.5s;
+  }
+
+  &:hover {
+    padding-right: 20px;
+  }
+
+  &:hover:after {
+    opacity: 1;
+    right: -3px;
+  }
 }

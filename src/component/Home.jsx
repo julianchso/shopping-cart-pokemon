@@ -1,9 +1,10 @@
-import './home.css';
+import '../css/app.css';
+import pokeStoreLogo from '../media/pokeStoreLogo.png';
 
 export default function Home() {
   return (
-    <div className='homeContainer'>
-      <img src='src/media/pokeStoreLogo.png' alt='pokeStoreLogo' id='pokeStoreLogoHomePage' />
+    <div className='home__container'>
+      <img src={pokeStoreLogo} alt='pokeStoreLogo' id='home__pokestore--logo' />
 
       <h2>Gotta catch &apos;em all</h2>
       <h3>

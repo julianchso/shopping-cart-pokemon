@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { POKE_API_URL_BASE, POKE_API_LIMIT } from '../../configs/config.js';
+import { POKE_API_URL_BASE, POKE_API_LIMIT } from '../configs/config.js';
 
-import { formatName } from '../../utils/formatNumber.jsx';
+import { formatName } from '../utils/formatNumber.jsx';
 
 const useFetchItemDetail = () => {
   const [pokeItemDetail, setPokeItemDetail] = useState([]);

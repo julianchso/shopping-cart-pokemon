@@ -1,8 +1,5 @@
 import { useState, createContext, useContext } from 'react';
-import { ShoppingCart } from '../../component/ShoppingCart';
 import PropTypes from 'prop-types';
-
-import { formatCurrency } from '../../utils/formatNumber';
 
 export const ShoppingCartContext = createContext({});
 
@@ -16,13 +13,10 @@ export function ShoppingCartProvider({ children }) {
 
   const cartQuantity = cart.reduce((quantity, item) => item.quantity + quantity, 0);
 
-  const cartTotal = formatCurrency(
-    cart.reduce((total, cartItem) => {
-      const item = cart.find((i) => i.id === cartItem.id);
-      return total + item.price * cartItem.quantity;
-    }, 0)
-  );
-
+  const cartTotal = cart.reduce((total, cartItem) => {
+    const item = cart.find((i) => i.id === cartItem.id);
+    return total + item.price * cartItem.quantity;
+  }, 0);
   console.log(cartTotal);
 
   const openCart = () => {

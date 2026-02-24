@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Root from './routes/root';
-import Home from './routes/home';
-import Shop from './routes/shop';
+import Root from './component/Root.jsx';
+import Home from './component/Home.jsx';
+import Shop from './component/Shop.jsx';
 import { ShoppingCart } from './component/ShoppingCart';
 
 import './css/global.css';

@@ -3,8 +3,8 @@ import * as ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import router from './App.jsx';
 
-import { ShoppingCartProvider } from './routes/context/ShoppingCartContext.jsx';
-// import { SearchBarProvider } from './routes/context/SearchbarContext.jsx';
+import { ShoppingCartProvider } from './context/ShoppingCartContext.jsx';
+// import { SearchBarProvider } from './context/SearchbarContext.jsx';
 
 import './css/reset.css';
 import './css/global.css';
@@ -18,5 +18,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       </ShoppingCartProvider>
       {/* </SearchBarProvider> */}
     </div>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

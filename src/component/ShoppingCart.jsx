@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { useShoppingCart } from '../routes/context/ShoppingCartContext';
-import { CartItemCard } from '../component/cartItems';
+import { useShoppingCart } from '../context/ShoppingCartContext';
+import { CartItemCard } from '../component/CartItemCard';
 
 import { Offcanvas } from 'react-bootstrap';
 
-import './ShoppingCart.css';
-import { formatCurrency } from '../utils/formatNumber';
+import '../css/global.css';
 
 export function ShoppingCart(isOpen) {
   const { openCart, closeCart, cart, cartTotal } = useShoppingCart();
@@ -15,14 +14,14 @@ export function ShoppingCart(isOpen) {
 
   const checkout = () => {
     alert(
-      `Successfully checked out ${cartTotal} worth of items! (If this were a real store it would lead to the payments page).`
+      `Successfully checked out ₽{cartTotal} worth of items! (If this were a real store it would lead to the payments page).`,
     );
   };
 
   return (
     <>
-      <div className='pageCtn'>
-        <div className='cartHeader'>
+      <div className='cart__container'>
+        <div className='cart__header'>
           <h2>Item</h2>
           <h2>Price</h2>
           <h2>Quantity</h2>
@@ -34,9 +33,9 @@ export function ShoppingCart(isOpen) {
           ))}
         </div>
       </div>
-      {/* TODO: add total */}
-      <div className='cartTotal'>Total: {cartTotal}</div>
-      <button type='submit' id='checkoutBtn' onClick={checkout}>
+
+      <div className='cart__total'>Total: ₽{cartTotal}</div>
+      <button type='submit' id='cart__checkout' onClick={checkout}>
         <span>Checkout</span>
       </button>
 

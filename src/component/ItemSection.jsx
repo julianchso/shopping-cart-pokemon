@@ -1,17 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Form } from 'react-router-dom';
 import { useFetchItemDetail } from '../services and helpers/fetchItem';
 import PropTypes from 'prop-types';
-// import { useSearchBar } from '../context/SearchbarContext';
-import ItemCard from './itemCard';
+import ItemCard from './ItemCard';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-// import './navbarSearch.css';
-import './itemSection.css';
-import '../../css/global.css';
-import '../navbar/navbarSearch.css';
+import '../css/global.css';
 
 export default function ItemSection() {
   const pokeItemDetail = useFetchItemDetail();
@@ -23,11 +19,11 @@ export default function ItemSection() {
 
   return (
     <>
-      <div className='pageCtn'>
-        <div className='navbarSearch'>
+      <div className='page__container'>
+        <div className='searchBar'>
           <Form action='' role='search'>
             <input
-              className='searchInput'
+              className='searchBar__input'
               type='search'
               id='q'
               name='q'
@@ -36,13 +32,13 @@ export default function ItemSection() {
               defaultValue={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-            <button className='searchBtn'>
+            <button className='searchBar__button' type='button'>
               <FontAwesomeIcon icon={faMagnifyingGlass} />
             </button>
           </Form>
         </div>
-        <div className='itemSection'>
-          <ul className='itemGridContainer'>
+        <div className='items__section'>
+          <ul className='items__container'>
             {Object.values(filteredItems).map((item) => {
               return <ItemCard item={item} key={item.id} className='itemCard' />;
             })}

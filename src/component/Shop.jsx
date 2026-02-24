@@ -1,8 +1,7 @@
-import ItemSection from './bodySection/itemSection';
-import Sidebar from './sidebar/sidebar';
+import ItemSection from './ItemSection';
+import Sidebar from './Sidebar';
 
 import '../css/reset.css';
-import './shop.css';
 
 export default function Shop() {
   return (

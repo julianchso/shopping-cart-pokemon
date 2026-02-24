@@ -1,5 +1,4 @@
-import SidebarCategory from './sidebarCategory';
-import './sidebar.css';
+import SidebarCategory from './SidebarCategory';
 
 export default function Sidebar() {
   return (

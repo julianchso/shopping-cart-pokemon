@@ -2,21 +2,21 @@ import { Link } from 'react-router-dom';
 // import NavbarSearch from './navbarSearch';
 import { useShoppingCart } from '../context/ShoppingCartContext';
 
+import pokeStoreLogo from '../media/pokeStoreLogo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
-import './navbar.css';
-import '../../css/app.css';
-import '../../css/global.css';
+import '../css/app.css';
+import '../css/global.css';
 
 export default function Navbar() {
-  const { openCart, closeCart, cartQuantity } = useShoppingCart();
+  const { openCart, cartQuantity } = useShoppingCart();
   return (
     <>
       <nav className='navbar'>
-        <div className='navbarLeft'>
-          <img src='src/media/pokeStoreLogo.png' alt='pokeStoreLogo' id='pokeStoreLogo' />
-          <ul className='navbarBtn'>
+        <div className='navbar__primary'>
+          <img src={pokeStoreLogo} alt='pokeStoreLogo' id='navbar__pokestore--logo' />
+          <ul className='navbar__primary--menu'>
             <li>
               <Link to={`/shopping-cart-pokemon/home`}>Home</Link>
             </li>
@@ -25,15 +25,13 @@ export default function Navbar() {
             </li>
           </ul>
         </div>
-        <div className='navbarRight'>
+        <div className='navbar__cart'>
           {/* <NavbarSearch /> */}
           <Link to={`/shopping-cart-pokemon/cart`}>
-            <div className='cartBtnCtn'>
-              <button className='cartBtn' onClick={openCart}>
-                <FontAwesomeIcon className='cartBtnIcon' icon={faCartShopping} />
-              </button>
-              <div className='cartQuantity'>{cartQuantity}</div>
-            </div>
+            <button className='navbar__cart--btn' onClick={openCart}>
+              <FontAwesomeIcon className='navbar__cart--icon' icon={faCartShopping} />
+              <div className='navbar__cart--qty'>{cartQuantity}</div>
+            </button>
           </Link>
         </div>
       </nav>
