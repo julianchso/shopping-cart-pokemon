@@ -11,7 +11,7 @@ import './css/global.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <div className='contentWrapper'>
+    <div className='layout'>
       {/* <SearchBarProvider> */}
       <ShoppingCartProvider>
         <RouterProvider router={router} />

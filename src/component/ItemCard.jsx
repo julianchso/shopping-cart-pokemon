@@ -37,9 +37,9 @@ function ItemCard({ item }) {
 
   return (
     <div className='shopCard__container'>
-      <div className='shopCard__name center'>{item.name}</div>
-      <img className='shopCard__img center' src={item.imgSrc} />
-      <div className='shopCard__price center'>{`₽${item.price}`}</div>
+      <div className='shopCard__name'>{item.name}</div>
+      <img className='shopCard__img' src={item.imgSrc} />
+      <div className='shopCard__price'>{`₽${item.price}`}</div>
 
       <div className='shopCard__quantity__container'>
         <button

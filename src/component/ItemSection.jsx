@@ -21,7 +21,7 @@ export default function ItemSection() {
     <>
       <div className='page__container'>
         <div className='searchBar'>
-          <Form action='' role='search'>
+          <Form action='' role='search' className='searchBar__form'>
             <input
               className='searchBar__input'
               type='search'
@@ -38,7 +38,7 @@ export default function ItemSection() {
           </Form>
         </div>
         <div className='items__section'>
-          <ul className='items__container'>
+          <ul className='shop__container'>
             {Object.values(filteredItems).map((item) => {
               return <ItemCard item={item} key={item.id} className='itemCard' />;
             })}
