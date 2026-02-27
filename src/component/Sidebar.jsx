@@ -1,11 +1,10 @@
-import SidebarCategory from './SidebarCategory';
+import ItemFilters from './ItemFilters';
 
 export default function Sidebar() {
   return (
     <>
       <div className='sidebar'>
-        <div>Sidebar: work in progress</div>
-        <SidebarCategory />
+        <ItemFilters />
       </div>
     </>
   );

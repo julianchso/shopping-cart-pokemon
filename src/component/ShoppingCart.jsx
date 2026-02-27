@@ -8,9 +8,6 @@ import '../css/global.css';
 
 export function ShoppingCart(isOpen) {
   const { openCart, closeCart, cart, cartTotal } = useShoppingCart();
-  console.log(cart);
-
-  cart.map((item) => console.log(item));
 
   const checkout = () => {
     alert(
@@ -22,12 +19,12 @@ export function ShoppingCart(isOpen) {
     <>
       <div className='cart__container'>
         <div className='cart__header'>
-          <h2>Item</h2>
-          <h2>Price</h2>
-          <h2>Quantity</h2>
-          <h2>Total</h2>
+          <span>Item</span>
+          <span>Price</span>
+          <span>Quantity</span>
+          <span>Total</span>
         </div>
-        <div>
+        <div className='cart__body'>
           {cart.map((item) => (
             <CartItemCard key={item.id} {...item} />
           ))}

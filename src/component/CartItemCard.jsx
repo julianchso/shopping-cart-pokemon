@@ -1,5 +1,4 @@
 import { useShoppingCart } from '../context/ShoppingCartContext';
-// import { usePokeItemDetail } from '../routes/context/PokeItemContext';
 import { formatUnit, formatName } from '../utils/formatNumber';
 
 import '../css/global.css';
@@ -13,18 +12,16 @@ export function CartItemCard(item) {
   const totalPrice = item.quantity * item.price;
 
   return (
-    <>
-      <div className='cart__item__container'>
-        <img src={item.img} className='cart__item__img' />
-        <div>
-          <h2>{item.name}</h2>
-          <h3>Category: {formatName(item.category)}</h3>
-        </div>
-        <div>₽{item.price}</div>
-        <div>{formatUnit(item.quantity)}</div>
-        <div>₽{totalPrice}</div>
-        <button className='cart__item__remove' onClick={() => removeFromCart(item.id)}></button>
+    <div className='cart__item'>
+      <img src={item.img} className='cart__item__img' />
+      <div className='cart__itemContent'>
+        <div data-label='product'>{item.name}</div>
+        <div data-label='category'>{formatName(item.category)}</div>
+        <div data-label='price'>₽{item.price}</div>
+        <div data-label='qty'>{formatUnit(item.quantity)}</div>
+        <div data-label='total'>₽{totalPrice}</div>
       </div>
-    </>
+      <button className='cart__item__remove' onClick={() => removeFromCart(item.id)}></button>
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Form } from 'react-router-dom';
-import { useFetchItemDetail } from '../services and helpers/fetchItem';
+import { useFetchItemDetail } from '../hooks/useFetchItem';
 import PropTypes from 'prop-types';
 import ItemCard from './ItemCard';
 
@@ -27,7 +27,7 @@ export default function ItemSection() {
               type='search'
               id='q'
               name='q'
-              placeholder='Search for item...'
+              placeholder='Search across all items...'
               aria-label='Search pokeItem'
               defaultValue={query}
               onChange={(e) => setQuery(e.target.value)}
