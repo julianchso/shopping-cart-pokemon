@@ -22,10 +22,6 @@ export default function Shop() {
   const [category, setCategory] = useState<string | null>(null);
   const [priceRange, setPriceRange] = useState<[number, number] | null>(null);
 
-  if (isPending) return <p>Loading...</p>;
-
-  if (error) return <p>Error: {error.message}</p>;
-
   const filteredItems = useMemo(() => {
     if (!pokeItemDetail) return [];
 
@@ -39,6 +35,7 @@ export default function Shop() {
 
   const priceMin = useMemo(() => {
     if (!pokeItemDetail) return 0;
+    console.log(pokeItemDetail);
     return Math.min(...pokeItemDetail.map((i: Item) => i.price));
   }, [pokeItemDetail]);
 
@@ -47,18 +44,23 @@ export default function Shop() {
     return Math.max(...pokeItemDetail.map((i: Item) => i.price));
   }, [pokeItemDetail]);
 
+  if (isPending) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
   return (
     <>
-      {/* <div className='shop'> */}
-      <ItemFilters
-        items={items}
-        minPrice={minPrice}
-        maxPrice={maxPrice}
-        onCategoryChange={setCategory}
-        onPriceChange={setPriceRange}
-      />
-      <ItemSection items={filteredItems} />
-      {/* </div> */}
+      <section id='shop' className='section'>
+        <div className='shop__content'>
+          {/* <ItemFilters
+          items={items}
+          minPrice={minPrice}
+          maxPrice={maxPrice}
+          onCategoryChange={setCategory}
+          onPriceChange={setPriceRange}
+        /> */}
+          <ItemSection items={filteredItems} />
+        </div>
+      </section>
     </>
   );
 }

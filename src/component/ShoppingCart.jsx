@@ -17,24 +17,26 @@ export function ShoppingCart(isOpen) {
 
   return (
     <>
-      <div className='cart__container'>
-        <div className='cart__header'>
-          <span>Item</span>
-          <span>Price</span>
-          <span>Quantity</span>
-          <span>Total</span>
+      <div id='cart' className='section'>
+        <div className='cart__container'>
+          <div className='cart__header'>
+            <span>Item</span>
+            <span>Price</span>
+            <span>Quantity</span>
+            <span>Total</span>
+          </div>
+          <div className='cart__body'>
+            {cart.map((item) => (
+              <CartItemCard key={item.id} {...item} />
+            ))}
+          </div>
         </div>
-        <div className='cart__body'>
-          {cart.map((item) => (
-            <CartItemCard key={item.id} {...item} />
-          ))}
-        </div>
-      </div>
 
-      <div className='cart__total'>Total: ₽{cartTotal}</div>
-      <button type='submit' id='cart__checkout' onClick={checkout}>
-        <span>Checkout</span>
-      </button>
+        <div className='cart__total'>Total: ₽{cartTotal}</div>
+        <button type='submit' id='cart__checkout' onClick={checkout}>
+          <span>Checkout</span>
+        </button>
+      </div>
 
       {/* TODO: Get Offcanvas to work */}
       {/* <Offcanvas show={true} onHide={closeCart} placement={'end'}>

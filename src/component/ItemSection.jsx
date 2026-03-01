@@ -19,31 +19,28 @@ export default function ItemSection() {
 
   return (
     <>
-      <div className='page__container'>
-        <div className='searchBar'>
-          <Form action='' role='search' className='searchBar__form'>
-            <input
-              className='searchBar__input'
-              type='search'
-              id='q'
-              name='q'
-              placeholder='Search across all items...'
-              aria-label='Search pokeItem'
-              defaultValue={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-            <button className='searchBar__button' type='button'>
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </button>
-          </Form>
-        </div>
-        <div className='items__section'>
-          <ul className='shop__container'>
-            {Object.values(filteredItems).map((item) => {
-              return <ItemCard item={item} key={item.id} className='itemCard' />;
-            })}
-          </ul>
-        </div>
+      <div className='searchBar'>
+        <Form action='' role='search' className='searchBar__form'>
+          <input
+            className='searchBar__input'
+            type='search'
+            id='q'
+            name='q'
+            placeholder='Search across all items...'
+            aria-label='Search pokeItem'
+            defaultValue={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <button className='searchBar__button' type='button'>
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </button>
+        </Form>
+      </div>
+      {/* <div className='items__section'> */}
+      <div className='shop__container'>
+        {Object.values(filteredItems).map((item) => {
+          return <ItemCard item={item} key={item.id} className='itemCard' />;
+        })}
       </div>
     </>
   );

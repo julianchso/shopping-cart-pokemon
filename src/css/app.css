@@ -25,11 +25,6 @@
   --BtnRadius: 5px;
 }
 
-@font-face {
-  font-family: 'Nunito Sans';
-  src: url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-}
-
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -108,10 +103,11 @@ h5 {
   margin: 0 20px;
 }
 
-.page__container {
+.section {
   margin: 0 auto;
   padding: 100px 25px;
   width: 100%;
+  max-width: 480px;
 }
 
 /* home */
@@ -137,7 +133,8 @@ h5 {
   align-items: center;
   height: 100px;
   padding: 20px 0;
-  /* font-family: 'Nunito Sans', Arial, Helvetica, sans-serif; */
+  margin: 0 auto;
+  font-family: 'Nunito Sans', Arial, Helvetica, sans-serif;
 }
 
 .navbar__primary--menu {
@@ -492,17 +489,15 @@ h5 {
       minmax(1rem, 1fr);
   }
 
-  .page__container {
+  /* shop */
+
+  #home,
+  #shop,
+  #cart {
     display: grid;
+    width: 960px;
     grid-column: 2;
   }
-
-  .page__container,
-  .cart__container {
-    max-width: 960px;
-  }
-
-  /* shop */
 
   .shopCard__container {
     display: flex;
@@ -511,6 +506,11 @@ h5 {
     background-color: var(--pokeColourYellow1);
     border-radius: 10px;
     padding: 10px;
+  }
+
+  .section {
+    width: 100%;
+    max-width: none;
   }
 
   .shop__container {
