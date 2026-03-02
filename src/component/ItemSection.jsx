@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Form } from 'react-router-dom';
-import { useFetchItemDetail } from '../hooks/useFetchItem';
 import PropTypes from 'prop-types';
+
 import ItemCard from './ItemCard';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,11 +9,14 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 import '../css/global.css';
 
-export default function ItemSection() {
-  const pokeItemDetail = useFetchItemDetail();
+ItemSection.propTypes = {
+  items: PropTypes.array.isRequired,
+};
+
+export default function ItemSection({ items = [] }) {
   const [query, setQuery] = useState('');
 
-  const filteredItems = pokeItemDetail.filter((item) => {
+  const filteredItems = items.filter((item) => {
     return item.name.toLowerCase().includes(query.toLowerCase());
   });
 

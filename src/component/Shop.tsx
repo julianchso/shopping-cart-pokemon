@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
 import ItemSection from './ItemSection';
 import ItemFilters from './ItemFilters';
@@ -7,7 +7,7 @@ import { useFetchItemDetail } from '../hooks/useFetchItem';
 import useItems from '../hooks/useItems';
 
 import '../css/reset.css';
-import { useParams } from 'react-router-dom';
+import { formatName } from '../utils/formatNumber';
 
 type Item = {
   id: number;
@@ -22,27 +22,38 @@ export default function Shop() {
   const [category, setCategory] = useState<string | null>(null);
   const [priceRange, setPriceRange] = useState<[number, number] | null>(null);
 
-  const filteredItems = useMemo(() => {
-    if (!pokeItemDetail) return [];
+  const { filteredItems, categories, minPrice, maxPrice } = useMemo(() => {
+    if (!pokeItemDetail) return { filteredItems: [], categories: [], minPrice: 0, maxPrice: 0 };
 
-    return pokeItemDetail.filter((item: Item) => {
-      const matchesCategory = category ? item.category === category : true;
+    let min = Infinity;
+    let max = -Infinity;
+    const categorySet = new Set<string>();
+
+    const filtered = pokeItemDetail.filter((item) => {
+      if (!item) return;
+
+      if (!item) return null;
+      categorySet.add(item.category);
+
+      if (item.price < min) min = item.price;
+      if (item.price > max) max = item.price;
+
+      const matchesCategory = category ? formatName(item.category) === formatName(category) : true;
+
       const matchesPrice = priceRange
         ? item.price >= priceRange[0] && item.price <= priceRange[1]
         : true;
+
+      return matchesCategory && matchesPrice;
     });
+
+    return {
+      filteredItems: filtered,
+      categories: [...categorySet],
+      minPrice: min === Infinity ? 0 : min,
+      maxPrice: max === Infinity ? 0 : max,
+    };
   }, [pokeItemDetail, category, priceRange]);
-
-  const priceMin = useMemo(() => {
-    if (!pokeItemDetail) return 0;
-    console.log(pokeItemDetail);
-    return Math.min(...pokeItemDetail.map((i: Item) => i.price));
-  }, [pokeItemDetail]);
-
-  const priceMax = useMemo(() => {
-    if (!pokeItemDetail) return 0;
-    return Math.max(...pokeItemDetail.map((i: Item) => i.price));
-  }, [pokeItemDetail]);
 
   if (isPending) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
@@ -51,13 +62,14 @@ export default function Shop() {
     <>
       <section id='shop' className='section'>
         <div className='shop__content'>
-          {/* <ItemFilters
-          items={items}
-          minPrice={minPrice}
-          maxPrice={maxPrice}
-          onCategoryChange={setCategory}
-          onPriceChange={setPriceRange}
-        /> */}
+          <ItemFilters
+            minPrice={minPrice}
+            maxPrice={maxPrice}
+            categories={categories}
+            selectedCategory={category}
+            onCategoryChange={setCategory}
+            onPriceChange={setPriceRange}
+          />
           <ItemSection items={filteredItems} />
         </div>
       </section>

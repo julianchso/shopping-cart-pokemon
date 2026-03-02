@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useShoppingCart } from '../context/ShoppingCartContext';
 import { CartItemCard } from '../component/CartItemCard';
 

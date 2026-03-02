@@ -28,13 +28,13 @@ const useFetchItemDetail = () => {
           id: data.id,
           imgSrc: data.sprites.default,
           price: data.cost == 0 ? (data.cost = 9999) : data.cost,
-          category: data.category,
+          category: formatName(data.category.name),
         }));
     });
 
     Promise.all(requests).then((responses) => setPokeItemDetail(responses));
   }, []);
-
+  console.log(`poke item detail: ${pokeItemDetail}`);
   return pokeItemDetail;
 };
 

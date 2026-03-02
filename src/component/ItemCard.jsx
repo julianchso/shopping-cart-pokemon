@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useShoppingCart } from '../context/ShoppingCartContext';
 
+import { formatName } from '../utils/formatNumber';
 import '../css/global.css';
 
 ItemCard.propTypes = {
@@ -31,13 +32,14 @@ function ItemCard({ item }) {
   }
 
   function addToCart(item, qty) {
-    addShopQtyToCart(item.name, item.id, qty, item.imgSrc, item.price, item.category.name);
+    addShopQtyToCart(item.name, item.id, qty, item.imgSrc, item.price, item.category);
     setQty(0);
   }
 
   return (
     <div className='shopCard__container'>
       <div className='shopCard__name'>{item.name}</div>
+      <div className='shopCard__category'>{formatName(item.category)}</div>
       <img className='shopCard__img' src={item.imgSrc} />
       <div className='shopCard__price'>{`₽${item.price}`}</div>
 
