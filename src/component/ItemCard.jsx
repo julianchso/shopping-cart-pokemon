@@ -38,7 +38,7 @@ function ItemCard({ item }) {
 
   return (
     <div className='shopCard__container'>
-      <div className='shopCard__name'>{item.name}</div>
+      <div className='shopCard__name'>{formatName(item.name)}</div>
       <div className='shopCard__category'>{formatName(item.category)}</div>
       <img className='shopCard__img' src={item.imgSrc} />
       <div className='shopCard__price'>{`₽${item.price}`}</div>

@@ -12,7 +12,33 @@ function ItemFilters({
 }) {
   return (
     <div>
-      {/* <div className='price-input-container'>
+      <div className='categories'>
+        {categories.map((category) => (
+          <label key={category}>
+            <input
+              type='checkbox'
+              name='category'
+              checked={selectedCategory === category}
+              onChange={() =>
+                onCategoryChange(selectedCategory === category ? null : [...category])
+              }
+            />
+            {/* {formatName(category)} */}
+            {category}
+          </label>
+        ))}
+        <button type='reset' onClick={() => onCategoryChange(null)}>
+          Clear All
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default ItemFilters;
+
+{
+  /* <div className='price-input-container'>
         <div className='price-input'>
           <div className='price-field'>
             <span>Minimum Price</span>
@@ -31,26 +57,5 @@ function ItemFilters({
       <div className='range-input'>
         <input type='range' className='min-range' min={minPrice} max={maxPrice} step='1' />
         <input type='range' className='max-range' min={minPrice} max={maxPrice} step='1' />
-      </div> */}
-
-      <div className='categories'>
-        {categories.map((category) => (
-          <label key={category}>
-            <input
-              type='checkbox'
-              name='category'
-              checked={selectedCategory === category}
-              onChange={() => onCategoryChange(selectedCategory === category ? null : category)}
-            />
-            {formatName(category)}
-          </label>
-        ))}
-        <button type='reset' onClick={() => onCategoryChange(null)}>
-          Clear All
-        </button>
-      </div>
-    </div>
-  );
+      </div> */
 }
-
-export default ItemFilters;

@@ -17,6 +17,7 @@ export default function ItemSection({ items = [] }) {
   const [query, setQuery] = useState('');
 
   const filteredItems = items.filter((item) => {
+    if (!item) return;
     return item.name.toLowerCase().includes(query.toLowerCase());
   });
 
@@ -29,7 +30,7 @@ export default function ItemSection({ items = [] }) {
             type='search'
             id='q'
             name='q'
-            placeholder='Search across all items...'
+            placeholder='Search items...'
             aria-label='Search pokeItem'
             defaultValue={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -39,7 +40,6 @@ export default function ItemSection({ items = [] }) {
           </button>
         </Form>
       </div>
-      {/* <div className='items__section'> */}
       <div className='shop__container'>
         {Object.values(filteredItems).map((item) => {
           return <ItemCard item={item} key={item.id} className='itemCard' />;
