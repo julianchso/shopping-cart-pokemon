@@ -4,9 +4,6 @@ import PropTypes from 'prop-types';
 
 import ItemCard from './ItemCard';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-
 import '../css/global.css';
 
 ItemSection.propTypes = {
@@ -23,23 +20,6 @@ export default function ItemSection({ items = [] }) {
 
   return (
     <>
-      <div className='searchBar'>
-        <Form action='' role='search' className='searchBar__form'>
-          <input
-            className='searchBar__input'
-            type='search'
-            id='q'
-            name='q'
-            placeholder='Search items...'
-            aria-label='Search pokeItem'
-            defaultValue={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <button className='searchBar__button' type='button'>
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
-          </button>
-        </Form>
-      </div>
       <div className='shop__container'>
         {Object.values(filteredItems).map((item) => {
           return <ItemCard item={item} key={item.id} className='itemCard' />;

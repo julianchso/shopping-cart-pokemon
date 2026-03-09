@@ -8,9 +8,9 @@ export type Item = {
   imgSrc: string;
 };
 
-export function useFetchItems() {
+export function useFetchItems({ search, category, maxPrice, minPrice }) {
   return useQuery<Item[]>({
-    queryKey: ['pokeItems'],
+    queryKey: ['pokeItems', { search, category, maxPrice, minPrice }],
     queryFn: async () => {
       const res = await fetch(`${import.meta.env.BASE_URL}data/items.json`);
 

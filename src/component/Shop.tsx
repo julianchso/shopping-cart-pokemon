@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 
 import ItemSection from './ItemSection';
-import ItemFilters from './ItemFilters';
+import { ItemFilters } from './ItemFilters';
 import Sidebar from './Sidebar';
 import { useFetchItems } from '../hooks/useFetchItems';
 
@@ -10,14 +10,18 @@ import { formatName } from '../utils/formatNumber';
 import { useItemFilters } from '../hooks/useItemFilters';
 
 export default function Shop() {
-  // const { search, category, maxPrice, minPrice } = useItemFilters;
+  const { search, category, maxPrice, minPrice } = useItemFilters();
 
-  const { data: pokeItemDetail, isPending, error } = useFetchItems();
+  const {
+    data: pokeItemDetail,
+    isPending,
+    error,
+  } = useFetchItems({ search, category, maxPrice, minPrice });
 
   const [selectedCategory, setSelectedCategory] = useState<Array<string> | null>(null);
   const [priceRange, setPriceRange] = useState<[number, number] | null>(null);
 
-  const { filteredItems, categories, minPrice, maxPrice } = useMemo(() => {
+  const { filterCategories, filterMinPrice, filterMaxPrice } = useMemo(() => {
     if (!pokeItemDetail) return { filteredItems: [], categories: [], minPrice: 0, maxPrice: 0 };
 
     let min = Infinity;
@@ -45,29 +49,42 @@ export default function Shop() {
 
     return {
       filteredItems: filtered,
-      categories: [...categorySet],
-      minPrice: min === Infinity ? 0 : min,
-      maxPrice: max === -Infinity ? 0 : max,
+      filterCategories: [...categorySet],
+      filterMinPrice: min === Infinity ? 0 : min,
+      filterMaxPrice: max === -Infinity ? 0 : max,
     };
   }, [pokeItemDetail, selectedCategory, priceRange]);
 
-  if (isPending) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  const filteredItems = useMemo(() => {
+    if (!pokeItemDetail) return [];
+
+    return pokeItemDetail.filter((item) => {
+      const matchesSearch = search ? item.name.toLowerCase().includes(search.toLowerCase()) : true;
+      const matchesCategory = category ? item.category === category : true;
+      const matchesMin = minPrice !== undefined ? item.price >= minPrice : true;
+      const matchesMax = maxPrice !== undefined ? item.price <= maxPrice : true;
+      const matchesPrice = matchesMin && matchesMax;
+      return matchesSearch && matchesCategory && matchesPrice;
+    });
+  }, [pokeItemDetail, search, category, minPrice, maxPrice]);
 
   return (
     <>
       <section id='shop' className='section'>
         <div className='shop__content'>
           <ItemFilters
-            minPrice={minPrice}
-            maxPrice={maxPrice}
-            categories={categories}
-            selectedCategory={selectedCategory}
-            onCategoryChange={setSelectedCategory}
-            onPriceChange={setPriceRange}
+            filterMinPrice={filterMinPrice}
+            filterMaxPrice={filterMaxPrice}
+            // categories={filterCategories}
+            // selectedCategory={selectedCategory}
+            // onCategoryChange={setSelectedCategory}
+            // onPriceChange={setPriceRange}
           />
-          {pokeItemDetail && <ItemSection items={filteredItems} />}
+          {error && <p>Error: {error.message}</p>}
+
           {isPending && <p>Loading...</p>}
+
+          <ItemSection items={filteredItems} />
         </div>
       </section>
     </>
