@@ -17,7 +17,6 @@ export function ShoppingCartProvider({ children }) {
     const item = cart.find((i) => i.id === cartItem.id);
     return total + item.price * cartItem.quantity;
   }, 0);
-  console.log(cartTotal);
 
   const openCart = () => {
     setIsOpen(true);

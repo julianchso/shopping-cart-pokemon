@@ -22,38 +22,30 @@ export default function Shop() {
   const [priceRange, setPriceRange] = useState<[number, number] | null>(null);
 
   const { filterCategories, filterMinPrice, filterMaxPrice } = useMemo(() => {
-    if (!pokeItemDetail) return { filteredItems: [], categories: [], minPrice: 0, maxPrice: 0 };
+    if (!pokeItemDetail) {
+      return {
+        filterCategories: [],
+        filterMinPrice: 0,
+        filterMaxPrice: 0,
+      };
+    }
 
     let min = Infinity;
     let max = -Infinity;
-    const categorySet = new Set<string>();
+    const categories = new Set<string>();
 
-    const filtered = pokeItemDetail.filter((item) => {
-      if (!item) return null;
-      categorySet.add(item.category);
-
-      if (item.price < min) min = item.price;
-      if (item.price > max) max = item.price;
-
-      const matchesCategory = selectedCategory
-        ? // ? formatName(item.category) === formatName(selectedCategory)
-          item.category === selectedCategory
-        : true;
-
-      const matchesPrice = priceRange
-        ? item.price >= priceRange[0] && item.price <= priceRange[1]
-        : true;
-
-      return matchesCategory && matchesPrice;
-    });
+    for (const { category, price } of pokeItemDetail) {
+      categories.add(category);
+      if (price < min) min = price;
+      if (price > max) max = price;
+    }
 
     return {
-      filteredItems: filtered,
-      filterCategories: [...categorySet],
+      filterCategories: [...categories],
       filterMinPrice: min === Infinity ? 0 : min,
       filterMaxPrice: max === -Infinity ? 0 : max,
     };
-  }, [pokeItemDetail, selectedCategory, priceRange]);
+  }, [pokeItemDetail]);
 
   const filteredItems = useMemo(() => {
     if (!pokeItemDetail) return [];
@@ -75,10 +67,7 @@ export default function Shop() {
           <ItemFilters
             filterMinPrice={filterMinPrice}
             filterMaxPrice={filterMaxPrice}
-            // categories={filterCategories}
-            // selectedCategory={selectedCategory}
-            // onCategoryChange={setSelectedCategory}
-            // onPriceChange={setPriceRange}
+            filterCategories={filterCategories}
           />
           {error && <p>Error: {error.message}</p>}
 

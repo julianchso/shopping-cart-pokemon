@@ -6,18 +6,20 @@ import { useDebounce } from '../hooks/useDebounce';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { formatName } from '../utils/formatNumber';
 
 export type ItemFilters = {
   search?: string;
-  category?: string;
+  filterCategories?: Array<string>;
+  categories?: Array<string>;
   filterMinPrice?: number;
   filterMaxPrice?: number;
   minPrice?: number;
   maxPrice?: number;
 };
 
-export function ItemFilters({ filterMinPrice, filterMaxPrice }: ItemFilters) {
-  const { search, category, maxPrice, minPrice, setFilters } = useItemFilters();
+export function ItemFilters({ filterMinPrice, filterMaxPrice, filterCategories }: ItemFilters) {
+  const { search, categories, maxPrice, minPrice, setFilters } = useItemFilters();
 
   const [localSearch, setLocalSearch] = useState(search);
   const debouncedSearch = useDebounce(localSearch, 250);
@@ -88,6 +90,25 @@ export function ItemFilters({ filterMinPrice, filterMaxPrice }: ItemFilters) {
           }}
         />
       </div>
+      <div className='categories'>
+        {filterCategories.map((category) => (
+          <label key={category}>
+            <input
+              type='checkbox'
+              name='category'
+              checked={false}
+              onChange={
+                () => {}
+                // onCategoryChange(selectedCategory === category ? null : [...category])
+              }
+            />
+            {formatName(category)}
+          </label>
+        ))}
+        <button type='reset' onClick={() => {}}>
+          Clear All
+        </button>
+      </div>
     </div>
   );
 }
@@ -123,23 +144,3 @@ export function ItemFilters({ filterMinPrice, filterMaxPrice }: ItemFilters) {
 //   onCategoryChange,
 //   onPriceChange,
 // })
-
-// <div className='categories'>
-//   {categories.map((category) => (
-//     <label key={category}>
-//       <input
-//         type='checkbox'
-//         name='category'
-//         checked={selectedCategory === category}
-//         onChange={() =>
-//           onCategoryChange(selectedCategory === category ? null : [...category])
-//         }
-//       />
-//       {/* {formatName(category)} */}
-//       {formatName(category)}
-//     </label>
-//   ))}
-//   <button type='reset' onClick={() => onCategoryChange(null)}>
-//     Clear All
-//   </button>
-// </div>

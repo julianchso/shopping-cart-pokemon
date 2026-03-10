@@ -7,7 +7,7 @@ export function useItemFilters() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const search = (searchParams.get('search') as ItemFilters['search']) ?? '';
-  const category = searchParams.get('category') as ItemFilters['category'];
+  const categories = searchParams.getAll('categories') as ItemFilters['categories'];
 
   const maxPrice = searchParams.get('maxPrice')
     ? parseInt(searchParams.get('maxPrice') as string)
@@ -24,8 +24,12 @@ export function useItemFilters() {
         params.set('search', filters.search);
       }
 
-      if (filters.category) {
-        params.set('category', filters.category);
+      if (filters.categories !== undefined) {
+        filters.categories.forEach((category) => {
+          params.append('categories', category);
+        });
+      } else {
+        params.delete('categories');
       }
 
       if (filters.minPrice !== undefined) {
@@ -46,7 +50,7 @@ export function useItemFilters() {
 
   return {
     search,
-    category,
+    categories,
     maxPrice,
     minPrice,
     setFilters,
