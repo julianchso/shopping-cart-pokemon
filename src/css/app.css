@@ -308,13 +308,12 @@ h5 {
 /* searchbar */
 
 .searchBar {
-  margin: 20px auto;
   border-radius: 10px;
   background-color: rgba(220, 220, 220);
   display: flex;
   align-items: center;
   height: 50px;
-  padding: 0 20px;
+  padding: 0 10px;
   &:hover .searchBar__button {
     background-color: rgba(200, 200, 200);
   }
@@ -490,7 +489,7 @@ h5 {
     display: grid;
     grid-template-columns:
       minmax(1rem, 1fr)
-      minmax(0, 960px)
+      minmax(0, 1200px)
       minmax(1rem, 1fr);
   }
 
@@ -500,7 +499,7 @@ h5 {
   #shop,
   #cart {
     display: grid;
-    width: 960px;
+    width: 100%;
     grid-column: 2;
   }
 
@@ -516,6 +515,7 @@ h5 {
   .section {
     width: 100%;
     max-width: none;
+    margin: 0;
   }
 
   .shop__container {
@@ -526,16 +526,58 @@ h5 {
     grid-gap: 18px;
   }
 
-  /* sidebar */
+  .shop__content {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    max-width: 1200px;
+    width: 100%;
+  }
 
-  .sidebar {
-    grid-column: 1;
+  .shop__filters {
+    position: sticky;
+    top: 1rem;
+    margin-right: 20px;
+    align-self: start;
+  }
+
+  .filter__subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+
+  .filter__categories__container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .filter__categories__buttons {
+    padding: 5px 0;
+  }
+
+  .filter__categories__button {
+    padding: 10px;
+  }
+
+  .filter__price__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 20px 0;
+  }
+
+  .filter__priceInput {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .filter__priceInput__desc {
+    width: 100px;
   }
 
   /* searchbar */
 
   .searchBar {
-    max-width: 50%;
+    width: 100%;
   }
 
   /* cart */

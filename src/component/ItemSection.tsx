@@ -18,8 +18,11 @@ export default function ItemSection({ items = [] }) {
     return item.name.toLowerCase().includes(query.toLowerCase());
   });
 
+  const itemCount = filteredItems.length;
+
   return (
     <>
+      <span>Found {itemCount} products</span>
       <div className='shop__container'>
         {Object.values(filteredItems).map((item) => {
           return <ItemCard item={item} key={item.id} className='itemCard' />;

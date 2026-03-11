@@ -24,7 +24,6 @@ export function ItemFilters({ filterMinPrice, filterMaxPrice, filterCategories }
   const [localSearch, setLocalSearch] = useState(search);
   const [localMin, setLocalMin] = useState('');
   const [localMax, setLocalMax] = useState('');
-  const [localCategories, setLocalCategories] = useState([]);
 
   const debouncedSearch = useDebounce(localSearch, 250);
 
@@ -53,14 +52,8 @@ export function ItemFilters({ filterMinPrice, filterMaxPrice, filterCategories }
     }
   }, [filterMaxPrice]);
 
-  useEffect(() => {
-    if (filterCategories !== undefined) {
-      setLocalCategories(filterCategories);
-    }
-  });
-
   return (
-    <div>
+    <>
       <div className='searchBar'>
         <Form
           action=''
@@ -83,45 +76,65 @@ export function ItemFilters({ filterMinPrice, filterMaxPrice, filterCategories }
           </button>
         </Form>
       </div>
-      <div className='filter__minPrice'>
-        <p>Min Price</p>
-        <input
-          className='filter__minPrice--input'
-          type='number'
-          id='minPrice'
-          name='minPrice'
-          min={filterMinPrice}
-          value={localMin}
-          aria-label='min price filter'
-          onChange={(e) => {
-            const value = e.target.value;
-            setLocalMin(value);
-            setFilters({
-              minPrice: value === '' ? undefined : Number(value),
-            });
-          }}
-        />
+      <div className='filter__price__container'>
+        <span className='filter__subtitle'>Price Range</span>
+        <div className='filter__priceInput filter__minPrice'>
+          <p className='filter__priceInput__desc'>Min Price</p>
+          <input
+            className='filter__minPrice--input'
+            type='number'
+            id='minPrice'
+            name='minPrice'
+            min={filterMinPrice}
+            value={localMin}
+            aria-label='min price filter'
+            onChange={(e) => {
+              const value = e.target.value;
+              setLocalMin(value);
+              setFilters({
+                minPrice: value === '' ? undefined : Number(value),
+              });
+            }}
+          />
+        </div>
+        <div className='filter__priceInput filter__maxPrice'>
+          <p>Max Price</p>
+          <input
+            className='filter__maxPrice__input'
+            type='number'
+            id='maxPrice'
+            name='maxPrice'
+            max={filterMaxPrice}
+            value={localMax}
+            aria-label='max price filter'
+            onChange={(e) => {
+              const value = e.target.value;
+              setLocalMax(value);
+              setFilters({
+                maxPrice: value === '' ? undefined : Number(value),
+              });
+            }}
+          />
+        </div>
       </div>
-      <div className='filter__maxPrice'>
-        <p>Max Price</p>
-        <input
-          className='filter__maxPrice--input'
-          type='number'
-          id='maxPrice'
-          name='maxPrice'
-          max={filterMaxPrice}
-          value={localMax}
-          aria-label='max price filter'
-          onChange={(e) => {
-            const value = e.target.value;
-            setLocalMax(value);
-            setFilters({
-              maxPrice: value === '' ? undefined : Number(value),
-            });
-          }}
-        />
-      </div>
-      <div className='categories'>
+      <div className='filter__categories__container'>
+        <span className='filter__subtitle'>Categories</span>
+        <div className='filter__categories__buttons'>
+          <button
+            className='filter__categories__button'
+            type='reset'
+            onClick={() => setFilters({ categories: filterCategories })}
+          >
+            Select All
+          </button>
+          <button
+            className='filter__categoriesButton'
+            type='reset'
+            onClick={() => setFilters({ categories: [] })}
+          >
+            Clear All
+          </button>
+        </div>
         {filterCategories &&
           filterCategories.map((category) => (
             <label key={category}>
@@ -142,42 +155,7 @@ export function ItemFilters({ filterMinPrice, filterMaxPrice, filterCategories }
               {formatName(category)}
             </label>
           ))}
-        <button type='reset' onClick={() => setFilters({ categories: [] })}>
-          Clear All
-        </button>
       </div>
-    </div>
+    </>
   );
 }
-
-// {
-/* <div className='price-input-container'>
-        <div className='price-input'>
-          <div className='price-field'>
-            <span>Minimum Price</span>
-            <input type='number' className='min-input' />
-          </div>
-          <div className='price-field'>
-            <span>Maximum Price</span>
-            <input type='number' className='max-input' />
-          </div>
-        </div>
-        <div className='slider'>
-          <div className='price-slider'></div>
-        </div>
-      </div>
-
-      <div className='range-input'>
-        <input type='range' className='min-range' min={minPrice} max={maxPrice} step='1' />
-        <input type='range' className='max-range' min={minPrice} max={maxPrice} step='1' />
-      </div> */
-// }
-
-// function ItemFilters({
-//   minPrice,
-//   maxPrice,
-//   categories,
-//   selectedCategory,
-//   onCategoryChange,
-//   onPriceChange,
-// })

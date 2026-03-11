@@ -6,7 +6,6 @@ import Sidebar from './Sidebar';
 import { useFetchItems } from '../hooks/useFetchItems';
 
 import '../css/reset.css';
-import { formatName } from '../utils/formatNumber';
 import { useItemFilters } from '../hooks/useItemFilters';
 
 export default function Shop() {
@@ -17,9 +16,6 @@ export default function Shop() {
     isPending,
     error,
   } = useFetchItems({ search, categories, maxPrice, minPrice });
-
-  const [selectedCategory, setSelectedCategory] = useState<Array<string> | null>(null);
-  const [priceRange, setPriceRange] = useState<[number, number] | null>(null);
 
   const { filterCategories, filterMinPrice, filterMaxPrice } = useMemo(() => {
     if (!pokeItemDetail) {
@@ -40,8 +36,10 @@ export default function Shop() {
       if (price > max) max = price;
     }
 
+    const sortedCategories = [...categories].sort();
+
     return {
-      filterCategories: [...categories],
+      filterCategories: [...sortedCategories],
       filterMinPrice: min === Infinity ? undefined : min,
       filterMaxPrice: max === -Infinity ? undefined : max,
     };
@@ -50,30 +48,36 @@ export default function Shop() {
   const filteredItems = useMemo(() => {
     if (!pokeItemDetail) return [];
 
-    return pokeItemDetail.filter((item) => {
+    const filteredItems = pokeItemDetail.filter((item) => {
       const matchesSearch = search ? item.name.toLowerCase().includes(search.toLowerCase()) : true;
-      const matchesCategory = categories ? categories.includes(item.category) : true;
+      const matchesCategory =
+        !categories || categories.length !== 0 ? categories.includes(item.category) : true;
       const matchesMin = minPrice !== undefined ? item.price >= minPrice : true;
       const matchesMax = maxPrice !== undefined ? item.price <= maxPrice : true;
       const matchesPrice = matchesMin && matchesMax;
       return matchesSearch && matchesCategory && matchesPrice;
     });
+
+    return filteredItems;
   }, [pokeItemDetail, search, categories, minPrice, maxPrice]);
 
   return (
     <>
       <section id='shop' className='section'>
         <div className='shop__content'>
-          <ItemFilters
-            filterMinPrice={filterMinPrice}
-            filterMaxPrice={filterMaxPrice}
-            filterCategories={filterCategories}
-          />
-          {error && <p>Error: {error.message}</p>}
+          <aside className='shop__filters'>
+            <ItemFilters
+              filterMinPrice={filterMinPrice}
+              filterMaxPrice={filterMaxPrice}
+              filterCategories={filterCategories}
+            />
+            {error && <p>Error: {error.message}</p>}
+          </aside>
 
-          {isPending && <p>Loading...</p>}
-
-          <ItemSection items={filteredItems} />
+          <div className='items'>
+            <ItemSection items={filteredItems} />
+            {isPending && <p>Loading...</p>}
+          </div>
         </div>
       </section>
     </>
