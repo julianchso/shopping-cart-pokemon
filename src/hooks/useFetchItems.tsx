@@ -13,6 +13,7 @@ export function useFetchItems({ search, categories, maxPrice, minPrice }) {
     queryKey: ['pokeItems', { search, categories, maxPrice, minPrice }],
     queryFn: async () => {
       const res = await fetch(`${import.meta.env.BASE_URL}data/items.json`);
+      // const res = await fetch(`/data/items.json`);
 
       if (!res.ok) {
         throw new Error('Failed to fetch items.json');

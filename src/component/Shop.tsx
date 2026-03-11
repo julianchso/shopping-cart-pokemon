@@ -2,7 +2,6 @@ import { useState, useMemo, useEffect } from 'react';
 
 import ItemSection from './ItemSection';
 import { ItemFilters } from './ItemFilters';
-import Sidebar from './Sidebar';
 import { useFetchItems } from '../hooks/useFetchItems';
 
 import '../css/reset.css';
