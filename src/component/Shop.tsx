@@ -10,13 +10,13 @@ import { formatName } from '../utils/formatNumber';
 import { useItemFilters } from '../hooks/useItemFilters';
 
 export default function Shop() {
-  const { search, category, maxPrice, minPrice } = useItemFilters();
+  const { search, categories, maxPrice, minPrice } = useItemFilters();
 
   const {
     data: pokeItemDetail,
     isPending,
     error,
-  } = useFetchItems({ search, category, maxPrice, minPrice });
+  } = useFetchItems({ search, categories, maxPrice, minPrice });
 
   const [selectedCategory, setSelectedCategory] = useState<Array<string> | null>(null);
   const [priceRange, setPriceRange] = useState<[number, number] | null>(null);
@@ -25,8 +25,8 @@ export default function Shop() {
     if (!pokeItemDetail) {
       return {
         filterCategories: [],
-        filterMinPrice: 0,
-        filterMaxPrice: 0,
+        filterMinPrice: undefined,
+        filterMaxPrice: undefined,
       };
     }
 
@@ -42,8 +42,8 @@ export default function Shop() {
 
     return {
       filterCategories: [...categories],
-      filterMinPrice: min === Infinity ? 0 : min,
-      filterMaxPrice: max === -Infinity ? 0 : max,
+      filterMinPrice: min === Infinity ? undefined : min,
+      filterMaxPrice: max === -Infinity ? undefined : max,
     };
   }, [pokeItemDetail]);
 
@@ -52,13 +52,13 @@ export default function Shop() {
 
     return pokeItemDetail.filter((item) => {
       const matchesSearch = search ? item.name.toLowerCase().includes(search.toLowerCase()) : true;
-      const matchesCategory = category ? item.category === category : true;
+      const matchesCategory = categories ? categories.includes(item.category) : true;
       const matchesMin = minPrice !== undefined ? item.price >= minPrice : true;
       const matchesMax = maxPrice !== undefined ? item.price <= maxPrice : true;
       const matchesPrice = matchesMin && matchesMax;
       return matchesSearch && matchesCategory && matchesPrice;
     });
-  }, [pokeItemDetail, search, category, minPrice, maxPrice]);
+  }, [pokeItemDetail, search, categories, minPrice, maxPrice]);
 
   return (
     <>

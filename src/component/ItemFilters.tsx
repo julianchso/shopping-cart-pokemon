@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 import { useItemFilters } from '../hooks/useItemFilters';
 import { Form } from 'react-router-dom';
@@ -11,9 +11,9 @@ import { formatName } from '../utils/formatNumber';
 export type ItemFilters = {
   search?: string;
   filterCategories?: Array<string>;
-  categories?: Array<string>;
   filterMinPrice?: number;
   filterMaxPrice?: number;
+  categories?: Array<string>;
   minPrice?: number;
   maxPrice?: number;
 };
@@ -22,7 +22,14 @@ export function ItemFilters({ filterMinPrice, filterMaxPrice, filterCategories }
   const { search, categories, maxPrice, minPrice, setFilters } = useItemFilters();
 
   const [localSearch, setLocalSearch] = useState(search);
+  const [localMin, setLocalMin] = useState('');
+  const [localMax, setLocalMax] = useState('');
+  const [localCategories, setLocalCategories] = useState([]);
+
   const debouncedSearch = useDebounce(localSearch, 250);
+
+  const initMinPrice = useRef(false);
+  const initMaxPrice = useRef(false);
 
   useEffect(() => {
     setLocalSearch(search ?? '');
@@ -31,6 +38,26 @@ export function ItemFilters({ filterMinPrice, filterMaxPrice, filterCategories }
   useEffect(() => {
     setFilters({ search: debouncedSearch });
   }, [debouncedSearch]);
+
+  useEffect(() => {
+    if (!initMinPrice.current && filterMinPrice !== undefined) {
+      setLocalMin(String(filterMinPrice));
+      initMinPrice.current = true;
+    }
+  }, [filterMinPrice]);
+
+  useEffect(() => {
+    if (!initMaxPrice.current && filterMaxPrice !== undefined) {
+      setLocalMax(String(filterMaxPrice));
+      initMaxPrice.current = true;
+    }
+  }, [filterMaxPrice]);
+
+  useEffect(() => {
+    if (filterCategories !== undefined) {
+      setLocalCategories(filterCategories);
+    }
+  });
 
   return (
     <div>
@@ -64,13 +91,15 @@ export function ItemFilters({ filterMinPrice, filterMaxPrice, filterCategories }
           id='minPrice'
           name='minPrice'
           min={filterMinPrice}
-          value={minPrice ?? ''}
+          value={localMin}
           aria-label='min price filter'
-          onChange={(e) =>
+          onChange={(e) => {
+            const value = e.target.value;
+            setLocalMin(value);
             setFilters({
-              minPrice: e.target.value ? Number(e.target.value) : undefined,
-            })
-          }
+              minPrice: value === '' ? undefined : Number(value),
+            });
+          }}
         />
       </div>
       <div className='filter__maxPrice'>
@@ -81,31 +110,39 @@ export function ItemFilters({ filterMinPrice, filterMaxPrice, filterCategories }
           id='maxPrice'
           name='maxPrice'
           max={filterMaxPrice}
-          value={maxPrice ?? ''}
+          value={localMax}
           aria-label='max price filter'
           onChange={(e) => {
+            const value = e.target.value;
+            setLocalMax(value);
             setFilters({
-              maxPrice: e.target.value ? Number(e.target.value) : undefined,
+              maxPrice: value === '' ? undefined : Number(value),
             });
           }}
         />
       </div>
       <div className='categories'>
-        {filterCategories.map((category) => (
-          <label key={category}>
-            <input
-              type='checkbox'
-              name='category'
-              checked={false}
-              onChange={
-                () => {}
-                // onCategoryChange(selectedCategory === category ? null : [...category])
-              }
-            />
-            {formatName(category)}
-          </label>
-        ))}
-        <button type='reset' onClick={() => {}}>
+        {filterCategories &&
+          filterCategories.map((category) => (
+            <label key={category}>
+              <input
+                type='checkbox'
+                name='category'
+                checked={categories?.includes(category)}
+                onChange={(e) => {
+                  const checked = e.target.checked;
+
+                  const next = checked
+                    ? [...categories, category]
+                    : categories.filter((c) => c !== category);
+
+                  setFilters({ categories: next });
+                }}
+              />
+              {formatName(category)}
+            </label>
+          ))}
+        <button type='reset' onClick={() => setFilters({ categories: [] })}>
           Clear All
         </button>
       </div>
