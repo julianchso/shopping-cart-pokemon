@@ -14,29 +14,40 @@ export function useItemFilters() {
   const minPrice = toNumber(searchParams.get('minPrice'));
   const maxPrice = toNumber(searchParams.get('maxPrice'));
 
-  const setFilters = useCallback((filters: Partial<ItemFilters>) => {
-    setSearchParams((params) => {
-      if (filters.search !== undefined) params.set('search', filters.search);
+  const setFilters = useCallback(
+    (filters: Partial<ItemFilters>) => {
+      setSearchParams((params) => {
+        const next = new URLSearchParams(params);
 
-      if (filters.categories !== undefined) {
-        params.delete('categories');
-        filters.categories.forEach((category) => params.append('categories', category));
-      }
+        if (filters.search !== undefined) {
+          if (filters.search) next.set('search', filters.search);
+          else next.delete('search');
+        }
 
-      if (filters.minPrice !== undefined) {
-        params.set('minPrice', filters.minPrice.toString());
-      } else if ('minPrice' in filters && filters.minPrice === undefined) {
-        params.delete('minPrice');
-      }
+        if ('categories' in filters) {
+          next.delete('categories');
 
-      if (filters.maxPrice !== undefined) {
-        params.set('maxPrice', filters.maxPrice.toString());
-      } else if ('maxPrice' in filters && filters.maxPrice === undefined) {
-        params.delete('maxPrice');
-      }
-      return params;
-    });
-  }, []);
+          if (filters.categories) {
+            filters.categories.forEach((category) => next.append('categories', category));
+          }
+        }
+
+        if (filters.minPrice !== undefined) {
+          next.set('minPrice', filters.minPrice.toString());
+        } else if ('minPrice' in filters && filters.minPrice === undefined) {
+          next.delete('minPrice');
+        }
+
+        if (filters.maxPrice !== undefined) {
+          next.set('maxPrice', filters.maxPrice.toString());
+        } else if ('maxPrice' in filters && filters.maxPrice === undefined) {
+          next.delete('maxPrice');
+        }
+        return next;
+      });
+    },
+    [setSearchParams],
+  );
 
   return {
     search,

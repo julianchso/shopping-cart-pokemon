@@ -9,18 +9,19 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 export default function Searchbar() {
   const { search, setFilters } = useItemFilters();
-
   const [localSearch, setLocalSearch] = useState(search);
 
   const debouncedSearch = useDebounce(localSearch, 250);
 
-  useEffect(() => {
-    setLocalSearch(search ?? '');
-  }, [search]);
+  // useEffect(() => {
+  //   setLocalSearch(search ?? '');
+  // }, [search]);
 
   useEffect(() => {
-    setFilters({ search: debouncedSearch });
-  }, [debouncedSearch]);
+    if (debouncedSearch !== search) {
+      setFilters({ search: debouncedSearch });
+    }
+  }, [debouncedSearch, search, setFilters]);
 
   return (
     <>

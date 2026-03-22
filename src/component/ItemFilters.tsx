@@ -108,10 +108,12 @@ export function ItemFilters({ filterMinPrice, filterMaxPrice, filterCategories }
                   const checked = e.target.checked;
 
                   const next = checked
-                    ? [...categories, category]
+                    ? [...(categories ?? []), category]
                     : categories.filter((c) => c !== category);
 
-                  setFilters({ categories: next });
+                  setFilters({
+                    categories: next.length ? next : undefined,
+                  });
                 }}
               />
               <span className='filter__categories__button button'>{formatName(category)}</span>
