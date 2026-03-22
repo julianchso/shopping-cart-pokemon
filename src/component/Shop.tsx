@@ -3,9 +3,10 @@ import { useState, useMemo, useEffect } from 'react';
 import ItemSection from './ItemSection';
 import { ItemFilters } from './ItemFilters';
 import { useFetchItems } from '../hooks/useFetchItems';
+import Searchbar from './Searchbar';
+import { useItemFilters } from '../hooks/useItemFilters';
 
 import '../css/reset.css';
-import { useItemFilters } from '../hooks/useItemFilters';
 
 export default function Shop() {
   const { search, categories, maxPrice, minPrice } = useItemFilters();
@@ -73,7 +74,8 @@ export default function Shop() {
             {error && <p>Error: {error.message}</p>}
           </aside>
 
-          <div className='items'>
+          <div>
+            <Searchbar />
             <ItemSection items={filteredItems} />
             {isPending && <p>Loading...</p>}
           </div>

@@ -22,7 +22,7 @@ export default function ItemSection({ items = [] }) {
 
   return (
     <>
-      <span>Found {itemCount} products</span>
+      <div className='shop__count'>Found {itemCount} products</div>
       <div className='shop__container'>
         {Object.values(filteredItems).map((item) => {
           return <ItemCard item={item} key={item.id} className='itemCard' />;
