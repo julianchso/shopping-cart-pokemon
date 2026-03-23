@@ -97,28 +97,31 @@ export function ItemFilters({ filterMinPrice, filterMaxPrice, filterCategories }
             Clear All
           </button>
         </div>
-        {filterCategories &&
-          filterCategories.map((category) => (
-            <label key={category} className='filter__categories__label'>
-              <input
-                type='checkbox'
-                name='category'
-                checked={categories?.includes(category)}
-                onChange={(e) => {
-                  const checked = e.target.checked;
+        <div className='filter__categories__checkbox'>
+          {filterCategories &&
+            filterCategories.map((category) => (
+              <label key={category} className='filter__categories__label'>
+                <input
+                  type='checkbox'
+                  name='category'
+                  checked={categories?.includes(category)}
+                  onChange={(e) => {
+                    const checked = e.target.checked;
 
-                  const next = checked
-                    ? [...(categories ?? []), category]
-                    : categories.filter((c) => c !== category);
+                    const next = checked
+                      ? [...(categories ?? []), category]
+                      : (categories ?? []).filter((c) => c !== category);
 
-                  setFilters({
-                    categories: next.length ? next : undefined,
-                  });
-                }}
-              />
-              <span className='filter__categories__button button'>{formatName(category)}</span>
-            </label>
-          ))}
+                    setFilters({
+                      // if categories exist, then show what's in next. Otherwise categories is undefined and shows all items
+                      categories: next.length ? next : undefined,
+                    });
+                  }}
+                />
+                <span className='filter__categories__button button'>{formatName(category)}</span>
+              </label>
+            ))}
+        </div>
       </div>
     </>
   );

@@ -237,25 +237,9 @@ h5 {
   justify-self: center;
 }
 
-.shopCard__name {
-  margin: 0 auto;
-  padding: 0.5em;
-}
-
-.shopCard__category {
-  margin: 0 auto;
-  padding: 0.5em;
-}
-
-.shopCard__price {
-  padding: 0.5em;
-  justify-self: center;
-}
-
 .shopCard__quantity__container {
   display: flex;
-  justify-self: center;
-  padding: 0.5em;
+  padding: 0.5em 0;
   width: 120px;
 }
 
@@ -267,15 +251,13 @@ h5 {
 }
 
 .shopCard__addToCart {
-  margin: 5px;
   padding: 5px;
   background-color: var(--pokeColourBlue1);
   transition: 0.2s;
   border-radius: 5px;
   font-family: 'Nunito Sans', Arial, Helvetica, sans-serif !important;
   color: #fff;
-  width: 150px;
-  justify-self: center;
+  width: 120px;
 
   &:hover {
     background-color: var(--pokeColourBlue2);
@@ -522,12 +504,16 @@ h5 {
   }
 
   .shopCard__container {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+    display: grid;
+    gap: 0.4em;
+    grid-template-columns: 35% 65%;
     background-color: var(--pokeColourYellow1);
     border-radius: 10px;
     padding: 10px;
+  }
+
+  .shopCard__addToCart {
+    grid-column: 2;
   }
 
   .section {
@@ -542,6 +528,15 @@ h5 {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-template-rows: auto;
     grid-gap: 18px;
+  }
+
+  .shopCard__name {
+    font-weight: bold;
+  }
+
+  .shopCard__category {
+    color: var(--color-gray-500);
+    font-style: italic;
   }
 
   .shop__content {
@@ -567,6 +562,38 @@ h5 {
     margin-bottom: 5px;
   }
 
+  input[type='checkbox'] {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    font: inherit;
+    color: var(--color-gray-800);
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.15em solid var(--color-gray-800);
+    border-radius: 0.15em;
+    transform: translateY(-0.075em);
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+  }
+
+  input[type='checkbox']::before {
+    content: '';
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--color-gray-800);
+    transform-origin: bottom left;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  }
+
+  input[type='checkbox']:checked::before {
+    transform: scale(1);
+  }
+
   .filter__categories__container {
     display: flex;
     flex-direction: column;
@@ -586,12 +613,19 @@ h5 {
     padding-left: 0px;
   }
 
+  .filter__categories__checkbox {
+    display: grid;
+    grid-template-columns: auto;
+    gap: 0.5em;
+  }
+
   .filter__categories__button {
     padding-left: 5px;
   }
 
   .filter__categories__label {
-    padding-bottom: 5px;
+    display: flex;
+    flex-direction: row;
   }
 
   .filter__price__container {
